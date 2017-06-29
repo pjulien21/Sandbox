@@ -52,6 +52,11 @@ class ConstrainedValue
          ApplyConstraints(bound1, bound2);
          }
 
+      bool HasConstraints() const
+         {
+         return (mMinValue > std::numeric_limits<T>::min() || mMaxValue < std::numeric_limits<T>::max());
+         }
+
       T MaxValue() const
          {
          return (mMaxValue);
@@ -72,6 +77,12 @@ class ConstrainedValue
          {
          mValue = value;
          return ClampValue();
+         }
+
+      void RemoveConstraints()
+         {
+         mMinValue = std::numeric_limits<T>::min();
+         mMaxValue = std::numeric_limits<T>::max();
          }
 
       ConstrainedValue<T>& operator=(T value)
@@ -149,5 +160,24 @@ class ConstrainedValue
       T mMinValue = std::numeric_limits<T>::min();
       T mMaxValue = std::numeric_limits<T>::max();
    };
+
+                             // Signed integer types alias
+using ConstrainedChar = ConstrainedValue<char>;
+using ConstrainedShort = ConstrainedValue<short>;
+using ConstrainedInt = ConstrainedValue<int>;
+using ConstrainedLong = ConstrainedValue<long>;
+using ConstrainedLongLong = ConstrainedValue<long long>;
+
+                             // Unsigned integer types alias
+using ConstrainedUChar = ConstrainedValue<unsigned char>;
+using ConstrainedUShort = ConstrainedValue<unsigned short>;
+using ConstrainedUInt = ConstrainedValue<unsigned int>;
+using ConstrainedULong = ConstrainedValue<unsigned long>;
+using ConstrainedULongLong = ConstrainedValue<unsigned long long>;
+
+                             // Floating-point types alias
+using ConstrainedFloat = ConstrainedValue<float>;
+using ConstrainedDouble = ConstrainedValue<double>;
+using ConstrainedLongDouble = ConstrainedValue<long double>;
 
 #endif
